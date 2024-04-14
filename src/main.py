@@ -35,30 +35,25 @@ def run_script():
     pyautogui.write("/scbi", interval=0.05)
     pydirectinput.press('enter')
 
-    count = 0
-
     for i in range(len(items_to_list)):
         item = items_to_list[i]
 
         if i == 0:
             pydirectinput.press('enter')
             time.sleep(0.2)
-            pyautogui.write("/scbi", interval=0.05)
-            time.sleep(0.6)
+            pyautogui.write("/scbi", interval=0.04)
+            time.sleep(0.2)
             pydirectinput.press("enter")
             time.sleep(0.2)
 
+        pydirectinput.press('enter')
+        time.sleep(0.2)
+        pyautogui.write(f"/ci {item['id']}", interval=0.04)
 
-        print("Iteração do loop")
-        count += 1
-        print(f"Iteração {count}")
-        pydirectinput.press('enter')
-        time.sleep(0.2)
-        pyautogui.write(f"/ci {item['id']}", interval=0.05)
-        time.sleep(0.6)
-        pydirectinput.press('enter')
-        time.sleep(0.2)
-        print("escreveu")
+        if i == len(items_to_list) - 1:
+            pydirectinput.press('enter')
+            pyautogui.alert("Pronto!")
+
     return
 
 ent = tk.Entry(window,width=10)
