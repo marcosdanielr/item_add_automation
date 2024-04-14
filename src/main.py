@@ -11,7 +11,7 @@ from components.checkbox import Checkbox
 
 window = tk.Tk()
 window.configure(bg='#282828')
-pyautogui.FAILSAFE = True
+pydirectinput.FAILSAFE = True
 
 checkbox_value = tk.BooleanVar()
 
@@ -27,35 +27,32 @@ def run_script():
 
     gf_windows = gw.getWindowsWithTitle("Grand Fantasia")
 
-    if gf_windows:
-        gf_window = gf_windows[0]
-        gf_window.activate()
+    if len(gf_windows) <= 0:
+        pyautogui.alert('Precisa estar com o GF aberto!')
+        return
+    
+    gf_window = gf_windows[0]
+    gf_window.activate()
 
-    pydirectinput.press('enter')
-    time.sleep(1)
-    pyautogui.write("/scbi", interval=0.05)
-    pydirectinput.press('enter')
+    pydirectinput.press("enter")
 
-    for i in range(len(items_to_list)):
-        item = items_to_list[i]
+    for i, item in enumerate(items_to_list):
 
         if i == 0 and checkbox_value.get():
-            pydirectinput.press('enter')
+            pydirectinput.press("enter")
             time.sleep(0.2)
             pyautogui.write("/scbi", interval=0.04)
             time.sleep(0.2)
             pydirectinput.press("enter")
-            time.sleep(0.2)
 
-        pydirectinput.press('enter')
+        pydirectinput.press("enter")
         time.sleep(0.2)
         pyautogui.write(f"/ci {item['id']}", interval=0.04)
+        time.sleep(0.2)
+        pydirectinput.press('enter')
 
         if i == len(items_to_list) - 1:
-            pydirectinput.press('enter')
             pyautogui.alert("Pronto!")
-
-    return
 
 ent = tk.Entry(window,width=10)
 
