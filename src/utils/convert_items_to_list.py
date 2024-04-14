@@ -2,17 +2,9 @@ import re
 
 def convert_items_to_list(text):
     items = []
+    all_items = re.findall(r'(.+)\[(\d+)\]\s+x(\d+)', text)
 
-    for line in text.splitlines():
-        match = re.match(r'.*\[(\d+)\]\s+x(\d+)', line)
-        if match:
-            id = int(match.group(1))
-            name_match = re.match(r'(.+)\[\d+\]\s+x\d+', line)
-            if name_match:
-                name = name_match.group(1).strip()
-            else:
-                name = "Name not found"
-            quantity = int(match.group(2))
-            items.append({'id': id, 'name': name, 'quantity': quantity})
+    for name, id, quantity in all_items:
+        items.append({'id': int(id), 'name': name.strip(), 'quantity': int(quantity)})
 
     return items
