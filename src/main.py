@@ -1,7 +1,9 @@
 import tkinter as tk
 from utils.convert_items_to_list import convert_items_to_list
 import pyautogui
+import pydirectinput
 import pygetwindow as gw
+import time
 
 from components.button import Button
 from components.textarea import TextArea
@@ -28,11 +30,35 @@ def run_script():
         gf_window = gf_windows[0]
         gf_window.activate()
 
-    for item in items_to_list:
-        print(item)
-        pyautogui.press('enter', interval=0.04)
+    pydirectinput.press('enter')
+    time.sleep(1)
+    pyautogui.write("/scbi", interval=0.05)
+    pydirectinput.press('enter')
+
+    count = 0
+
+    for i in range(len(items_to_list)):
+        item = items_to_list[i]
+
+        if i == 0:
+            pydirectinput.press('enter')
+            time.sleep(0.2)
+            pyautogui.write("/scbi", interval=0.05)
+            time.sleep(0.6)
+            pydirectinput.press("enter")
+            time.sleep(0.2)
+
+
+        print("Iteração do loop")
+        count += 1
+        print(f"Iteração {count}")
+        pydirectinput.press('enter')
+        time.sleep(0.2)
         pyautogui.write(f"/ci {item['id']}", interval=0.05)
-        pyautogui.press('enter', interval=0.06)
+        time.sleep(0.6)
+        pydirectinput.press('enter')
+        time.sleep(0.2)
+        print("escreveu")
     return
 
 ent = tk.Entry(window,width=10)
