@@ -7,14 +7,15 @@ import time
 
 from components.button import Button
 from components.textarea import TextArea
+from components.checkbox import Checkbox
 
 window = tk.Tk()
 window.configure(bg='#282828')
-
 pyautogui.FAILSAFE = True
 
+checkbox_value = tk.BooleanVar()
+
 def run_script():
-    pyautogui.FAILSAFE = True
     textarea_value = textarea.get("1.0", "end-1c")
 
     items_to_list = convert_items_to_list(textarea_value)
@@ -38,7 +39,7 @@ def run_script():
     for i in range(len(items_to_list)):
         item = items_to_list[i]
 
-        if i == 0:
+        if i == 0 and checkbox_value.get():
             pydirectinput.press('enter')
             time.sleep(0.2)
             pyautogui.write("/scbi", interval=0.04)
@@ -69,6 +70,9 @@ textarea.pack(pady=20)
 button = Button(window, text="Confirmar")
 button.config(command=run_script)
 button.pack(pady=20)
+
+checkbox = Checkbox(window, text="Limpar inventário", variable=checkbox_value)
+checkbox.pack()
 
 
 window.mainloop()
